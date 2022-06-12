@@ -1,0 +1,18 @@
+<ng-template #divModal let-modal>
+    <div class="rounded-0 bg-white">
+      <div>
+        
+        <app-create-client
+          *ngIf="target === 'createClient'"
+          (cerrarModal)="modal.close()"         
+        ></app-create-client>
+
+        <app-edit-student
+          *ngIf="target === 'editClient'"
+          (cerrarModal)="modal.close()"  
+          [student]="data"       
+        ></app-edit-student>
+      
+      </div>
+    </div>
+</ng-template>

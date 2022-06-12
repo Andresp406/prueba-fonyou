@@ -1,0 +1,97 @@
+<div class="modal-content rounded-0" style="width: 390px; height: auto">
+    <app-button-close
+      (cerrarModal)="cerrar($event)"
+      [addClassTopRight]="true"
+    ></app-button-close>
+    <div class="p-3">
+      <div class="text-center exo pt-4" style="font-size: 36px"></div>
+      <div class="mt-0 exo p-2 mb-0 text-center">
+        
+        <a
+          class=""
+          (click)="cerrar(true)"
+          href="javascript:void(0)"
+          > </a
+        >.
+      </div>
+      <div class="text-center exo"  style="font-size: 26px">{{title}}</div>
+   
+      <form [formGroup]="forma" (ngSubmit)="onSubmit()">
+        <div class="mb-2" style="height: 50px">
+          <input
+            type="text"
+            class="form-control exo text-field shadow-none"
+            formControlName="nombre"
+            aria-describedby="nombre"
+            [placeholder]= "student.nombre"
+             
+          />
+          <app-validations-errors class="mt-2 mb-2" [forma]="forma" formControlLabel="nombre" [minlenght]=3>
+        </app-validations-errors>
+        </div>
+        <div class="mb-2 mt-5" style="height: 50px">
+          <input
+            type="text"
+            class="form-control exo text-field shadow-none"
+            formControlName="apellido"
+            aria-describedby="apellido"
+            [placeholder]= "student.apellido"
+            
+          />
+          <app-validations-errors class="mt-2 mb-2" [forma]="forma" formControlLabel="apellido" [minlenght]=3>
+        </app-validations-errors>
+        </div>
+
+        <div class="mb-2 mt-5" style="height: 50px">
+            <input
+              type="number"
+              class="form-control exo text-field shadow-none"
+              formControlName="edad"
+              aria-describedby="edad"
+              [placeholder]="student.edad"
+              
+            />
+            <app-validations-errors class="mt-2 mb-2" [forma]="forma" formControlLabel="email" [minlenght]=3>
+            </app-validations-errors>
+        </div>
+
+        <div class="mb-2 mt-5" style="height: 50px">
+            <input
+              type="text"
+              class="form-control exo text-field shadow-none"
+              formControlName="ciudad"
+              aria-describedby="ciudad"
+              [placeholder]="student.ciudad"
+              
+            />
+            <app-validations-errors class="mt-2 mb-2" [forma]="forma" formControlLabel="ciudad" [minlenght]=3>
+            </app-validations-errors>
+        </div>
+
+        <div class="mb-2 mt-5" style="height: 50px">
+            <input
+              type="text"
+              class="form-control exo text-field shadow-none"
+              formControlName="zonaHoraria"
+              aria-describedby="zonaHoraria"
+              [placeholder]="student.zonaHoraria"
+              
+            />
+            <app-validations-errors class="mt-2 mb-2" [forma]="forma" formControlLabel="zonaHoraria" [minlenght]=3>
+            </app-validations-errors>
+        </div>
+     
+        <button
+          type="submit"
+          [disabled]="forma.invalid"
+          class="btn btn-primary aldrich shadow-none rounded-0 active mt-5"
+          style="width: 100%; height: 50px; opacity: 1"
+        >
+        Editar
+        </button>
+      </form>
+  
+      <div class="mt-2 exo p-2 text-center"></div>
+     
+    </div>
+  </div>
