@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { IStudent as IStudent } from '../interfaces/student.interface';
-import { StudentService } from '../services/student.service';
+import { IStudent as IStudent } from '../../interfaces/student.interface';
+import { StudentService } from '../../services/student.service';
 import { faEdit, faEye, faTrash, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
 import { NgxSpinnerService } from "ngx-spinner";

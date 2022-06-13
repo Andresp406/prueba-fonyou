@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { StudentComponent } from './student/student.component';
-import { HomeComponent } from './components/home/home.component';
-import { ExamComponent } from './exam/exam.component';
+import { StudentComponent } from './pages/student/student.component';
+import { HomeComponent } from './pages/home/home.component';
+import { ExamComponent } from './pages/exam/exam.component';
+import { CreateExamComponent } from './pages/create-exam/create-exam.component';
 
 const routes: Routes = [
   {path:'', component: HomeComponent},
   {path:'student', component: StudentComponent},
   {path:'exam', component: ExamComponent},
+  {path:'create-exam', component: CreateExamComponent},
   {path:'**', redirectTo:'/'}
 ];
 

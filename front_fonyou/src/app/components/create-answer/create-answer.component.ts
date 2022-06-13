@@ -3,14 +3,15 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IExam } from 'src/app/interfaces/exam.interface';
 
 @Component({
-  selector: 'app-create-question',
-  templateUrl: './create-question.component.html',
-})
-export class CreateQuestionComponent implements OnInit {
+  selector: 'app-create-answer',
+  templateUrl: './create-answer.component.html',
 
+})
+export class CreateAnswerComponent implements OnInit {
+  @Input() forma!:FormGroup;
   @Input() exam!:IExam;
   @Output() cerrarModal = new EventEmitter<boolean>();
-  forma:FormGroup;
+
   title:string='Formulario de Creacion de Examen';
 
   constructor() { 
@@ -22,12 +23,12 @@ export class CreateQuestionComponent implements OnInit {
 
   setValidationForm(): FormGroup {
       return new FormGroup({        
-        point: new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(15)]),
-        title: new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(15)]),
+        option: new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(15)]),
+        isValid: new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(15)]),
+
       });
     }
-
   onSubmit(){
-
+    
   }
 }

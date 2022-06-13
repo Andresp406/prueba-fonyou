@@ -24,7 +24,6 @@ export class CreateStudentComponent implements OnInit {
 
   setValidationForm(): FormGroup {
     return new FormGroup({
-      
       name: new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(15)]),
       lastName: new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(15)]),
       age: new FormControl(null, [Validators.required]),

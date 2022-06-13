@@ -5,33 +5,29 @@ registerLocaleData(localeES, 'es');
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ComponentsModule } from './components/components.module';
-import { StudentComponent } from './student/student.component';
+
 import { ModalModule } from './components/modal/modal.module';
 import { HttpClientModule } from '@angular/common/http';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { ExamComponent } from './exam/exam.component';
-import { NgxSpinnerModule } from "ngx-spinner";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
+import { PagesModule } from './pages/pages.module';
+import { ComponentsModule } from './components/components.module';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    StudentComponent,
-    ExamComponent,
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ComponentsModule,
     ModalModule,
     HttpClientModule,
-    FontAwesomeModule,
-    NgxSpinnerModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    PagesModule,
+    ComponentsModule
   ],
   
   providers: [{provide:LOCALE_ID, useValue:'es'}],

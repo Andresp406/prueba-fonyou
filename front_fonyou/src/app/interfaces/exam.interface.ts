@@ -1,6 +1,6 @@
 export interface IExam{
     id:number;
-    grade:string;
+    grade?:string;
     question?:IQuestion[];
 }
 

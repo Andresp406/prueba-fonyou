@@ -1,0 +1,15 @@
+<div class="row g-6">
+  <div class="col-sm-6">
+    <label for="inputEmail4" class="form-label">Titulo de la pregunta</label>
+    <input type="text" class="form-control" formControlName="title">
+    <app-validations-errors class="mt-2 mb-2" [forma]="forma" formControlLabel="option" [minlenght]=3>
+    </app-validations-errors>
+  </div>
+  <div class="col-md-6">
+    <label for="inputPassword4" class="form-label">Puntos Por pregunta</label>
+    <input type="text" class="form-control"  formControlName="point">
+    <app-validations-errors class="mt-2 mb-2" [forma]="forma" formControlLabel="isValid" [minlenght]=3>
+    </app-validations-errors>
+  </div>
+</div>
+
