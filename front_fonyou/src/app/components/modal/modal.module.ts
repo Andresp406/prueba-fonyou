@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BaseModalComponent } from './base-modal/base-modal.component';
-
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { ValidationsErrorsComponent } from './validations-errors/validations-errors.component';
@@ -30,6 +30,7 @@ import { ButtonCloseComponent } from './button-close/button-close.component';
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    MatDatepickerModule,
 
   ],
   exports:[

@@ -34,7 +34,7 @@
                 <td>{{student.lastName | uppercase}}</td>
                 <td>{{student.age }}</td>
                 <td>{{student.city | uppercase}}</td>
-                <td>{{student.timeZone}}</td>
+                <td>{{student.timeZone | date:"EEEE dd, MMMM yyyy a zzzz"| uppercase}}</td>
                 <td> 
                   <a (click)="editStudent.open(student)" style="cursor: pointer;"><fa-icon [icon]="icons[0]"></fa-icon></a>
                   <a (click)="showStudent.open(student)" style="cursor: pointer;"><fa-icon [icon]="icons[1]"></fa-icon></a>

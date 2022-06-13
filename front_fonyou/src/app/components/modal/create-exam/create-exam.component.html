@@ -15,22 +15,24 @@
         >.
       </div>
       <div class="text-center exo"  style="font-size: 26px">{{title}}</div>
-   
-      <form [formGroup]="forma" (ngSubmit)="onSubmit()">
+      <app-create-answer></app-create-answer>
+      <app-create-question></app-create-question>
+      <form [formGroup]="forma" (ngSubmit)="onSubmit()" class="mt-2">
         <div class="mb-2" style="height: 50px">
           <input
             type="text"
             class="form-control exo text-field shadow-none"
             formControlName="title"
-            aria-describedby="nombre"
-            placeholder="Nombre"
+            aria-describedby="title"
+            placeholder="Titulo del examen"
              
           />
-          <app-validations-errors class="mt-2 mb-2" [forma]="forma" formControlLabel="nombre" [minlenght]=3>
+          <app-validations-errors class="mt-2 mb-2" [forma]="forma" formControlLabel="title" [minlenght]=3>
         </app-validations-errors>
 
     </div>
      
+    
         <button
           type="submit"
           [disabled]="forma.invalid"
@@ -40,7 +42,6 @@
         Crear Examen
         </button>
       </form>
-  
       <div class="mt-2 exo p-2 text-center"></div>
      
     </div>

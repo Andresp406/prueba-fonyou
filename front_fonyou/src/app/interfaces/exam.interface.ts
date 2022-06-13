@@ -6,12 +6,12 @@ export interface IExam{
 
 export interface IQuestion{
     title:string;
-    point:number;
+    point?:number;
     answer?:IAnswer[];
 }
 
 export interface IAnswer{
-    id:number;
+    id?:number;
     option:string;
     isValid:boolean;
 }
