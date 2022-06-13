@@ -4,7 +4,6 @@ import { ModalService } from 'src/app/services/modal.service';
 @Component({
   selector: 'app-base-modal',
   templateUrl: './base-modal.component.html',
-  styleUrls: ['./base-modal.component.css']
 })
 export class BaseModalComponent implements OnInit {
 

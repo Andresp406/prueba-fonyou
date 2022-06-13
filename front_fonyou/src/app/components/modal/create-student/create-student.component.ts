@@ -25,11 +25,11 @@ export class CreateStudentComponent implements OnInit {
   setValidationForm(): FormGroup {
     return new FormGroup({
       
-      nombre: new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(15)]),
-      apellido: new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(15)]),
-      edad: new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(15)]),
-      ciudad: new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(15)]),
-      zonaHoraria: new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(15)]),
+      name: new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(15)]),
+      lastName: new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(15)]),
+      age: new FormControl(null, [Validators.required]),
+      city: new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(15)]),
+      timeZone: new FormControl(null, [Validators.required]),
     });
   }
 
@@ -56,6 +56,7 @@ export class CreateStudentComponent implements OnInit {
   cerrar(event: boolean): void {
     this.cerrarModal.emit(true);
   }
+
 
 
 }

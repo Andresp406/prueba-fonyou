@@ -3,6 +3,8 @@ import { IStudent as IStudent } from '../interfaces/student.interface';
 import { StudentService } from '../services/student.service';
 import { faEdit, faEye, faTrash, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
+import { NgxSpinnerService } from "ngx-spinner";
+
 
 @Component({
   selector: 'app-student',
@@ -12,14 +14,18 @@ export class StudentComponent implements OnInit {
   students:IStudent[] = [];
   icons:IconDefinition[] = [faEdit, faEye, faTrash];
 
-  constructor(private studentService:StudentService) {}
+  constructor(private studentService:StudentService,  private spinner: NgxSpinnerService,) {}
 
   ngOnInit(): void {
     this.getStudents()
   }
 
   public getStudents():void{
-    this.studentService.getStudent().subscribe(student => this.students = student);
+    this.spinner.show();
+    this.studentService.getStudent().subscribe(student => {
+      this.students = student
+      this.spinner.hide();
+    });
   }
 
   public deleteStudent(student:IStudent):void{  
@@ -45,6 +51,8 @@ export class StudentComponent implements OnInit {
     });
    
   }
+
+  
 
   studentUpdate(student:IStudent):void{
     this.students.push(student);

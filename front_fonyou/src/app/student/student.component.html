@@ -18,6 +18,15 @@
                 <th>Acciones</th>
             </tr>
           </thead>
+          <ngx-spinner
+            bdColor="rgba(51,51,51,0.8)"
+            size="medium"
+            color="#fff"
+            type="ball-scale-multiple"
+          >
+            
+            <p style="font-size: 20px; color: white">Loading...</p></ngx-spinner
+          >
           <tbody>
             <tr *ngFor="let student of students">
                 <td>{{student.id}}</td>
@@ -28,7 +37,7 @@
                 <td>{{student.timeZone}}</td>
                 <td> 
                   <a (click)="editStudent.open(student)" style="cursor: pointer;"><fa-icon [icon]="icons[0]"></fa-icon></a>
-                  <a (click)="showStudent.open()" style="cursor: pointer;"><fa-icon [icon]="icons[1]"></fa-icon></a>
+                  <a (click)="showStudent.open(student)" style="cursor: pointer;"><fa-icon [icon]="icons[1]"></fa-icon></a>
                   <a (click)="deleteStudent(student)" style="cursor: pointer;"><fa-icon [icon]="icons[2]"></fa-icon></a>
                 </td>
             </tr>

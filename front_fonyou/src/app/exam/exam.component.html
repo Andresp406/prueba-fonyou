@@ -1,1 +1,14 @@
-<p>exam works!</p>
+
+<div class="card text-center container" style="bottom:-25%">
+    <div class="card-header">
+      Registrar Examen
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Modulo para registrar examen</h5>
+      <a  class="btn btn-primary" (click)="createExam.open()">Crear Examen</a>
+    </div>
+    <div class="card-footer text-muted">
+     &copy; FonYou
+    </div>
+  </div>
+<app-base-modal #createExam [target]="'createExam'"></app-base-modal>

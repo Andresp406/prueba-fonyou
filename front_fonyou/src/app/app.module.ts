@@ -9,6 +9,8 @@ import { ModalModule } from './components/modal/modal.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ExamComponent } from './exam/exam.component';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 
@@ -25,6 +27,8 @@ import { ExamComponent } from './exam/exam.component';
     ModalModule,
     HttpClientModule,
     FontAwesomeModule,
+    NgxSpinnerModule,
+    BrowserAnimationsModule
   ],
   
   providers: [],

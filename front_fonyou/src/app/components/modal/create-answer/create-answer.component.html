@@ -1,0 +1,24 @@
+<form [formGroup]="forma" (ngSubmit)="onSubmit()">
+    <div class="mb-2" style="height: 50px">
+      <input
+        type="text"
+        class="form-control exo text-field shadow-none"
+        formControlName="title"
+        aria-describedby="nombre"
+        placeholder="Nombre"
+         
+      />
+      <app-validations-errors class="mt-2 mb-2" [forma]="forma" formControlLabel="nombre" [minlenght]=3>
+    </app-validations-errors>
+
+</div>
+ 
+    <button
+      type="submit"
+      [disabled]="forma.invalid"
+      class="btn btn-primary aldrich shadow-none rounded-0 active mt-5"
+      style="width: 100%; height: 50px; opacity: 1"
+    >
+    Crear Examen
+    </button>
+  </form>
