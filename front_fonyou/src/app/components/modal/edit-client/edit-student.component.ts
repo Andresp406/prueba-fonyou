@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Student } from 'src/app/interfaces/student.interface';
+import { IStudent } from 'src/app/interfaces/student.interface';
 import { StudentService } from 'src/app/services/student.service';
 import Swal from 'sweetalert2';
 
@@ -10,44 +10,67 @@ import Swal from 'sweetalert2';
 })
 export class EditStudentComponent implements OnInit {
   forma: FormGroup;
-  title: string = 'Formulario de modificacion Cliente';
-  @Input() student!:Student;
+  title: string = 'Formulario de modificacion Estudiante';
+  @Input() student!:IStudent;
   @Output() cerrarModal = new EventEmitter<boolean>();
+  @Output() studentUpdate = new EventEmitter<IStudent>();
 
-  constructor(private clienteService: StudentService) {
+  constructor(private studentService: StudentService) {
     this.forma = this.setValidationForm();
   }
 
   ngOnInit(): void {
+    const data:IStudent = {
+      name:this.student.name,
+      lastName:this.student.lastName,
+      age:this.student.age,
+      city:this.student.city,
+      timeZone:this.student.timeZone
+    }
+    this.forma.setValue(data);
   }
 
 
   setValidationForm(): FormGroup {
     return new FormGroup({
-      nombre: new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(15)]),
-      apellido: new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(15)]),
-      edad: new FormControl(null, [Validators.required]),
-      ciudad: new FormControl(null, [Validators.required]),
-      zonaHoraria: new FormControl(null, [Validators.required]),
+      name: new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(15)]),
+      lastName: new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(15)]),
+      age: new FormControl(null, [Validators.required]),
+      city: new FormControl(null, [Validators.required]),
+      timeZone: new FormControl(null, [Validators.required]),
     });
   }
 
   onSubmit(): void {
-    const data: Student = {
-      nombre: this.forma.get('nombre')?.value,
-      apellido: this.forma?.get('apellido')?.value,
-      edad: this.forma?.get('edad')?.value,
-      ciudad: this.forma?.get('ciudad')?.value,
-      zonaHoraria: this.forma?.get('zonaHoraria')?.value,
+    const data: IStudent = {
+      id: this.student.id,
+      name: this.forma.get('name')?.value,
+      lastName: this.forma?.get('lastName')?.value,
+      age: this.forma?.get('age')?.value,
+      city: this.forma?.get('city')?.value,
+      timeZone: this.forma?.get('timeZone')?.value,
     };
-    this.clienteService.createClient(data);
     Swal.fire({
-        icon: 'success',
-        title: 'el cliente ha sido guardado exitosamente',
-        showConfirmButton: false,
-        timer: 1500
-      });
-      this.cerrar(true);
+      title: 'Desea guardar los cambios?',
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: 'Guardar',
+      denyButtonText: `No guardar`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.studentService.updateStudent(data).subscribe(resp => {
+          Swal.fire('Editado!', '', 'success');
+          this.cerrar(true);
+        });
+        this.studentUpdate.emit(data);
+      } else if (result.isDenied) {
+        Swal.fire('Cambios no guardados', '', 'info');
+        this.cerrar(true);
+      }
+    })
+
+    
+  
 
   }
 

@@ -21,24 +21,24 @@
           <input
             type="text"
             class="form-control exo text-field shadow-none"
-            formControlName="nombre"
+            formControlName="name"
             aria-describedby="nombre"
-            [placeholder]= "student.nombre"
+      
              
           />
-          <app-validations-errors class="mt-2 mb-2" [forma]="forma" formControlLabel="nombre" [minlenght]=3>
+          <app-validations-errors class="mt-2 mb-2" [forma]="forma" formControlLabel="name" [minlenght]=3>
         </app-validations-errors>
         </div>
         <div class="mb-2 mt-5" style="height: 50px">
           <input
             type="text"
             class="form-control exo text-field shadow-none"
-            formControlName="apellido"
+            formControlName="lastName"
             aria-describedby="apellido"
-            [placeholder]= "student.apellido"
+         
             
           />
-          <app-validations-errors class="mt-2 mb-2" [forma]="forma" formControlLabel="apellido" [minlenght]=3>
+          <app-validations-errors class="mt-2 mb-2" [forma]="forma" formControlLabel="lastName" [minlenght]=3>
         </app-validations-errors>
         </div>
 
@@ -46,12 +46,11 @@
             <input
               type="number"
               class="form-control exo text-field shadow-none"
-              formControlName="edad"
+              formControlName="age"
               aria-describedby="edad"
-              [placeholder]="student.edad"
-              
+            
             />
-            <app-validations-errors class="mt-2 mb-2" [forma]="forma" formControlLabel="email" [minlenght]=3>
+            <app-validations-errors class="mt-2 mb-2" [forma]="forma" formControlLabel="age" [minlenght]=3>
             </app-validations-errors>
         </div>
 
@@ -59,25 +58,23 @@
             <input
               type="text"
               class="form-control exo text-field shadow-none"
-              formControlName="ciudad"
+              formControlName="city"
               aria-describedby="ciudad"
-              [placeholder]="student.ciudad"
-              
+
             />
-            <app-validations-errors class="mt-2 mb-2" [forma]="forma" formControlLabel="ciudad" [minlenght]=3>
+            <app-validations-errors class="mt-2 mb-2" [forma]="forma" formControlLabel="city" [minlenght]=3>
             </app-validations-errors>
         </div>
 
         <div class="mb-2 mt-5" style="height: 50px">
             <input
-              type="text"
+              type="date"
               class="form-control exo text-field shadow-none"
-              formControlName="zonaHoraria"
+              formControlName="timeZone"
               aria-describedby="zonaHoraria"
-              [placeholder]="student.zonaHoraria"
-              
+
             />
-            <app-validations-errors class="mt-2 mb-2" [forma]="forma" formControlLabel="zonaHoraria" [minlenght]=3>
+            <app-validations-errors class="mt-2 mb-2" [forma]="forma" formControlLabel="timeZone" [minlenght]=3>
             </app-validations-errors>
         </div>
      

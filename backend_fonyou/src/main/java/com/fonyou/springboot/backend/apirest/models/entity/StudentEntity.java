@@ -4,37 +4,60 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Data
+
 @Entity
-@Table(name="student")
+@Table(name="students")
 public class StudentEntity implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
+	@Column(nullable=false)
+	@Size(min=4, max=21)
 	private String name;
 	
-	@Column(name="last_name")
+	@Column(name="last_name", nullable=false)
+	@Size(min=4, max=21)
 	private String lastName;
 	
+	@Column(nullable=false)
 	private Integer age;
-	private String city;
 	
+	@Column(nullable=false)
+	private String city;
 	
 	@Column(name="time_zone")
 	@Temporal(TemporalType.DATE)
 	private Date timeZone;
 	
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "exam"})
+    @ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="exam_id")
+	private ExamEntity exam;
+	
+	//getter and setter
+	public ExamEntity getExam() {
+		return exam;
+	}
+
+	public void setExam(ExamEntity exam) {
+		this.exam = exam;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -82,6 +105,8 @@ public class StudentEntity implements Serializable{
 	public void setTimeZone(Date timeZone) {
 		this.timeZone = timeZone;
 	}
+	
+	
 
 	private static final long serialVersionUID = 1L;
 

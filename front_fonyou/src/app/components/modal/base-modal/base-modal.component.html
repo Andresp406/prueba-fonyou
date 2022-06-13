@@ -2,15 +2,17 @@
     <div class="rounded-0 bg-white">
       <div>
         
-        <app-create-client
-          *ngIf="target === 'createClient'"
-          (cerrarModal)="modal.close()"         
-        ></app-create-client>
+        <app-create-student
+          *ngIf="target === 'createStudent'"
+          (cerrarModal)="modal.close()" 
+          (studentUpdate)="testFunction($event)"        
+        ></app-create-student>
 
         <app-edit-student
-          *ngIf="target === 'editClient'"
+          *ngIf="target === 'editStudent'"
           (cerrarModal)="modal.close()"  
-          [student]="data"       
+          [student]="data"  
+          (studentUpdate)="testFunction($event)"     
         ></app-edit-student>
       
       </div>

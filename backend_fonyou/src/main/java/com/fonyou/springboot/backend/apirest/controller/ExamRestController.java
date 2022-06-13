@@ -25,47 +25,46 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fonyou.springboot.backend.apirest.constants.EnumConstantsApi;
 import com.fonyou.springboot.backend.apirest.models.entity.ExamEntity;
-import com.fonyou.springboot.backend.apirest.models.entity.StudentEntity;
-import com.fonyou.springboot.backend.apirest.models.services.StudentServicesInterface;
+import com.fonyou.springboot.backend.apirest.models.services.ExamServicesInterface;
 
 @CrossOrigin(origins= {"http://localhost:4200"})
 @RestController()
 @RequestMapping("/api")
-public class StudentRestController {
-
-	@Autowired
-	private StudentServicesInterface studentService;
+public class ExamRestController {
 	
-	@GetMapping("/student")
-	public List<StudentEntity> index(){
-		return this.studentService.findAll();
+	@Autowired
+	private ExamServicesInterface examService;
+
+	@GetMapping("/exam")
+	public List<ExamEntity> index(){
+		return this.examService.findAll();
 	}
 	
-	@GetMapping("/student/{id}")
+	@GetMapping("/exam/{id}")
 	public ResponseEntity<?> show(@PathVariable Long id) {
-		StudentEntity student = null;
+		ExamEntity exam = null;
 		Map<String, Object> response = new HashMap<>();
 		try {
-			student = this.studentService.findById(id);
+			exam = this.examService.findById(id);
 		}catch(DataAccessException e){
 			response.put(EnumConstantsApi.ST_MESSAGE_JSON.getValue(), "Error al realizar la consulta : en base de datos");
 			response.put(EnumConstantsApi.ST_ERROR_JSON.getValue(), e.getMessage());
 			return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
-		if (student == null) {
-			response.put(EnumConstantsApi.ST_MESSAGE_JSON.getValue(), "El estudiante con ID: ".concat(id.toString().concat("No existe en base de datos")));
+		if (exam == null) {
+			response.put(EnumConstantsApi.ST_MESSAGE_JSON.getValue(), "El Examen con ID: ".concat(id.toString().concat("No existe en base de datos")));
 			return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
 		}
 		
 		
-		return new ResponseEntity<>(student, HttpStatus.OK);
+		return new ResponseEntity<>(exam, HttpStatus.OK);
 	}
 	
-	@PostMapping("/create-student")
+	@PostMapping("/create-exam")
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<?> create(@Valid @RequestBody StudentEntity student, BindingResult result){
-		StudentEntity studentNew = null;
+	public ResponseEntity<?> create(@Valid @RequestBody ExamEntity exam, BindingResult result){
+		ExamEntity examNew = null;
 		Map<String, Object> response = new HashMap<>();
 		
 		if (result.hasErrors()) {
@@ -78,24 +77,26 @@ public class StudentRestController {
 		}
 		
 		try {
-			studentNew = this.studentService.save(student);
+			examNew = this.examService.save(exam);
 		}catch(DataAccessException e) {
 			response.put(EnumConstantsApi.ST_MESSAGE_JSON.getValue(), "Error al realizar el Insert : en base de datos");
 			response.put(EnumConstantsApi.ST_ERROR_JSON.getValue(), e.getMessage());
 			return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
-		response.put(EnumConstantsApi.ST_MESSAGE_JSON.getValue(), "Cliente creado con exito");
-		response.put(EnumConstantsApi.ST_STUDENT_JSON.getValue(), studentNew);
+		response.put(EnumConstantsApi.ST_MESSAGE_JSON.getValue(), "Examen creado con exito");
+		response.put("exam", examNew);
 		
 		return new ResponseEntity<>( response, HttpStatus.CREATED);
 	}
 	
-	@PutMapping("/student/{id}")
-	public ResponseEntity<?> update(@Valid @RequestBody StudentEntity student,BindingResult result,  @PathVariable Long id) {
-		System.out.println(student);
-		StudentEntity studentNow = studentService.findById(id);
-		StudentEntity studentUpdate = null;
+	
+	
+	@PutMapping("/exam/{id}")
+	public ResponseEntity<?> update(@Valid @RequestBody ExamEntity exam, BindingResult result, @PathVariable Long id) {
+		
+		ExamEntity examNow = examService.findById(id);
+		ExamEntity examUpdate = null;
 		Map<String, Object> response = new HashMap<>();
 		
 		if (result.hasErrors()) {
@@ -107,54 +108,46 @@ public class StudentRestController {
 			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 		}
 		
-		if (studentNow == null) {
+		
+		if (examNow == null) {
 			response.put(EnumConstantsApi.ST_MESSAGE_JSON.getValue(), "Error no se pudo editar con ID: ".concat(id.toString()));
 			return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
 		}
 		
 		try {
-			studentNow.setName(student.getName());
-			studentNow.setLastName(student.getLastName());
-			studentNow.setAge(student.getAge());
-			studentNow.setCity(student.getCity());
-			studentNow.setTimeZone(student.getTimeZone());
 			
-			studentUpdate = studentService.save(studentNow);
+			examNow.setGrade(exam.getGrade());
+			examNow.setQuestion(exam.getQuestion());
+
+			examUpdate = examService.save(examNow);
 		}catch(DataAccessException e){
 			response.put(EnumConstantsApi.ST_MESSAGE_JSON.getValue(), "Error al realizar la consulta : en base de datos");
 			response.put(EnumConstantsApi.ST_ERROR_JSON.getValue(), e.getMessage());
 			return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
-		response.put(EnumConstantsApi.ST_MESSAGE_JSON.getValue(), "Cliente actualizado con exito");
-		response.put(EnumConstantsApi.ST_STUDENT_JSON.getValue(), studentUpdate);
+		response.put(EnumConstantsApi.ST_MESSAGE_JSON.getValue(), "Examen actualizado con exito");
+		response.put(EnumConstantsApi.ST_EXAM_JSON.getValue(), examUpdate);
 	
 		
 		return new ResponseEntity<>( response, HttpStatus.CREATED); 
 		
 	}
-	 
+	
 
-	@DeleteMapping("/student/{id}")
-	public ResponseEntity<?> delete(@PathVariable Long id) {
-		
+	@DeleteMapping("/exam/{id}")
+	public ResponseEntity<?> delete(Long id) {
 		Map<String, Object> response = new HashMap<>();
 		try{
-			this.studentService.delete(id);
+			this.examService.delete(id);
 		}catch(DataAccessException e){
-			response.put(EnumConstantsApi.ST_MESSAGE_JSON.getValue(), "Error al eliminar al estudiante : en base de datos");
+			response.put(EnumConstantsApi.ST_MESSAGE_JSON.getValue(), "Error al eliminar el examen : en base de datos");
 			response.put(EnumConstantsApi.ST_ERROR_JSON.getValue(), e.getMessage());
 			return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		 
-		response.put(EnumConstantsApi.ST_MESSAGE_JSON.getValue(), "cliente eliminado con exito");
-		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+		
+		response.put(EnumConstantsApi.ST_MESSAGE_JSON.getValue(), "examen eliminado con exito");
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-	
-	@GetMapping("/student/exam")
-	public List<ExamEntity> getExams(){
-		return this.studentService.findAllExam();
-	}
-	
 	
 }

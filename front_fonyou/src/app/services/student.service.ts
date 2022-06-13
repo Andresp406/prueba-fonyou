@@ -1,32 +1,46 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Student } from '../interfaces/student.interface';
-import { Observable } from 'rxjs';
+import { IStudent } from '../interfaces/student.interface';
+import { catchError, Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StudentService {
-  private urlEndPoint:string = 'http://localhost:9000/api/clients'
   constructor(private _http:HttpClient) { }
 
-  getClient():Observable<Student[]>{
-    return this._http.get<Student[]>(this.urlEndPoint);
+  getStudent():Observable<IStudent[]>{
+    return this._http.get<IStudent[]>(`${environment.url_base}student`);
   }
 
-  createClient(cliente:Student){
-    
+  createStudent(student:IStudent):Observable<any>{
+    console.log(student);
+    const headers = this._getHeaders();
+    return this._http.post<any>(`${environment.url_base}create-student`, student, {headers});
   }
 
-  findClientById(id:number){
+  findStudentById(id:number){
 
   }
 
-  deleteClient(id:number){
-
+  deleteStudent(id:number|any):Observable<any>{
+    const headers = this._getHeaders();
+    return this._http.delete<Observable<any>>(`${environment.url_base}student/${id}`, {headers});
   }
 
-  updateClient(cliente:Student){
+  updateStudent(student:IStudent|any):Observable<any>{
+    const headers = this._getHeaders();
+    return this._http.put<Observable<any>>(`${environment.url_base}student/${student.id}`,student , {headers});
+  }
 
+
+  private _getHeaders(): HttpHeaders {
+      const headers = new HttpHeaders({
+      Headers:environment.headers,
+    })
+
+    return headers;
   }
 }

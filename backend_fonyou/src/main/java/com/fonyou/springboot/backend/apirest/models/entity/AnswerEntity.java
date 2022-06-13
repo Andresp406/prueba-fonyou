@@ -1,60 +1,79 @@
 package com.fonyou.springboot.backend.apirest.models.entity;
 
-
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Data
 @Entity
-@Table(name="answer")
-public class AnswerEntity implements Serializable{
-	
-
+@Table(name = "answers")
+public class AnswerEntity implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
+	@Column(name="opcion")
 	private String option;
-	
+
 	@NotNull(message = "Se requiere indicar si la respuesta correcta.")
+	@Column(name="is_valid")
 	private Boolean isValid;
 	
-	
+	@JsonIgnoreProperties({"answer", "hibernateLazyInitializer", "handler"})
+	@ManyToOne(fetch=FetchType.LAZY)
+	private QuestionEntity question;
+
+
 	public Long getId() {
 		return id;
 	}
+
+
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Boolean getIsValid() {
-		return isValid;
-	}
-	public void setIsValid(Boolean isValid) {
-		this.isValid = isValid;
-	}
+
+
 	public String getOption() {
 		return option;
 	}
+
+
 	public void setOption(String option) {
 		this.option = option;
 	}
-	public boolean isValid() {
+
+
+	public Boolean getIsValid() {
 		return isValid;
 	}
-	public void setValid(boolean isValid) {
+
+
+	public void setIsValid(Boolean isValid) {
 		this.isValid = isValid;
 	}
-	
+
+
+	public QuestionEntity getQuestion() {
+		return question;
+	}
+
+
+	public void setQuestion(QuestionEntity question) {
+		this.question = question;
+	}
+
+
 	private static final long serialVersionUID = 1L;
-	
 
 }

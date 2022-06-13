@@ -5,6 +5,10 @@ public enum EnumConstantsApi {
 	ST_MESSAGE_QUESTION_OK("Pregunta Creada"),
 	ST_ERROR_CODE_200("200"),
 	ST_DESCRIPTION_CODE_200("Exitoso"),
+	ST_MESSAGE_JSON("message"),
+	ST_ERROR_JSON("error"),
+	ST_EXAM_JSON("exam"),
+	ST_STUDENT_JSON("student"),
 	
 	ST_ERROR_CODE_400("400"),
 	ST_DESCRIPTION_CODE_400("Error en la formacion de la solicitud"),

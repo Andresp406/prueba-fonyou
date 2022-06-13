@@ -1,8 +1,12 @@
-export interface Student{
+import { IExam } from "./exam.interface";
+
+export interface IStudent{
     id?:number;
-    nombre:string;
-    apellido:string;
-    edad:number;
-    ciudad:string;
-    zonaHoraria:string;
+    name:string;
+    lastName:string;
+    age:number;
+    city:string;
+    timeZone:string;
+    exam?: IExam;
+    
 }
