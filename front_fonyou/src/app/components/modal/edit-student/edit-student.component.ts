@@ -60,6 +60,7 @@ export class EditStudentComponent implements OnInit {
       if (result.isConfirmed) {
         this.studentService.updateStudent(data).subscribe(resp => {
           Swal.fire('Editado!', '', 'success');
+          this.studentUpdate.emit(data);
           this.cerrar(true);
         });
         this.studentUpdate.emit(data);
@@ -68,10 +69,6 @@ export class EditStudentComponent implements OnInit {
         this.cerrar(true);
       }
     })
-
-    
-  
-
   }
 
   cerrar(event: boolean): void {

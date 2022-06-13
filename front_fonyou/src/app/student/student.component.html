@@ -51,6 +51,6 @@
         <p>No hay clientes registrados en base de datos</p>
     </div>
 </div>
-<app-base-modal #createStudent [target]="'createStudent'" (generic)="studentUpdate($event)"></app-base-modal>
-<app-base-modal #editStudent [target]="'editStudent'" (generic)="studentUpdateEdit($event)"></app-base-modal>
+<app-base-modal #createStudent [target]="'createStudent'" (generic)="studentUpdate()"></app-base-modal>
+<app-base-modal #editStudent [target]="'editStudent'" (generic)="studentUpdate()"></app-base-modal>
 <app-base-modal #showStudent [target]="'showStudent'"></app-base-modal>

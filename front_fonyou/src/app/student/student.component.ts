@@ -52,13 +52,9 @@ export class StudentComponent implements OnInit {
    
   }
 
-  
-
-  studentUpdate(student:IStudent):void{
-    this.students.push(student);
+  studentUpdate():void{
+   this.getStudents();
   }
  
-  studentUpdateEdit(student:IStudent):void{
-    this.students = this.students.filter(stu => stu !== student);
-  }
+  
 }
