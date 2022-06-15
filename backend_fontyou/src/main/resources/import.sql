@@ -66,7 +66,6 @@ INSERT INTO answers (is_valid, opcion, question_id) VALUES (1, 'OPCION 3', 10);
 INSERT INTO answers (is_valid, opcion, question_id) VALUES (0, 'OPCION 4', 10);
 --
 --INSERT TABLE STUDENT
-INSERT INTO students (name, last_name, age, city, time_zone, exam_id) VALUES ('ANDRES', 'PENAGOS', 33, 'santa marta', '2022-03-12', 1 );
-INSERT INTO students (name, last_name, age, city, time_zone, exam_id) VALUES ('SOENDRA', 'HENRIQUEZ', 37, 'santa marta', '2022-03-12', 2 );
-
+INSERT INTO students (name, last_name, age, city, time_zone, exam_id, photo) VALUES ('ANDRES', 'PENAGOS', 33, 'santa marta', '2022-03-12', 1 , NULL);
+INSERT INTO students (name, last_name, age, city, time_zone, exam_id, photo) VALUES ('SOENDRA', 'HENRIQUEZ', 37, 'santa marta', '2022-03-12', 2, NULL );
 

@@ -6,12 +6,16 @@
              
                 <div class="col-md-6">
                     <label for="inputState" class="form-label">Escoja el alumno</label>
-                    <select id="inputState" class="form-select" >
+                    <select id="inputState" class="form-select" formControlName="name" #name>
                       <option selected>Escoja...</option>
-                      <option *ngFor="let student of students">{{student.name | uppercase}} {{student.lastName | uppercase}}</option>
+                      <option *ngFor="let student of students"  >{{student.name | uppercase}} {{student.lastName | uppercase}}</option>
                     </select>
                 </div>
-                          
+                <ng-template *ngIf="name.value">
+
+                    <div >hola </div>
+                </ng-template>
+
                 <div class="col-12">
                     <button type="submit" class="btn btn-primary">Crear Examen</button>
                 </div>

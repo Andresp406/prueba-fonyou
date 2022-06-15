@@ -1,14 +1,26 @@
 package com.fonyou.springboot.backend.apirest.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -20,8 +32,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fonyou.springboot.backend.apirest.constants.EnumConstantsApi;
 import com.fonyou.springboot.backend.apirest.models.entity.ExamEntity;
@@ -35,6 +49,8 @@ public class StudentRestController {
 
 	@Autowired
 	private StudentServicesInterface studentService;
+	
+	private final Logger log = LoggerFactory.getLogger(StudentRestController.class);
 	
 	@GetMapping("/student")
 	public List<StudentEntity> index(){
@@ -139,7 +155,15 @@ public class StudentRestController {
 	public ResponseEntity<?> delete(@PathVariable Long id) {
 		
 		Map<String, Object> response = new HashMap<>();
+		StudentEntity student = this.studentService.findById(id);
 		try{
+			if (!isEmptyCustom(student.getPhoto())) {
+				Path beforePhotoRoute = Paths.get("upload").resolve(student.getPhoto()).toAbsolutePath();
+				File beforePhoto = beforePhotoRoute.toFile();
+				if (beforePhoto.exists() && beforePhoto.canRead()) {
+					beforePhoto.delete();
+				}
+			}
 			this.studentService.delete(id);
 		}catch(DataAccessException e){
 			response.put(EnumConstantsApi.ST_MESSAGE_JSON.getValue(), "Error al eliminar al estudiante : en base de datos");
@@ -154,6 +178,72 @@ public class StudentRestController {
 	@GetMapping("/student/exam")
 	public List<ExamEntity> getExams(){
 		return this.studentService.findAllExam();
+	}
+	
+	@PostMapping("student/upload")
+	public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file, @RequestParam("id") Long id){
+		Map<String, Object> response = new HashMap<>();
+		
+		StudentEntity student = this.studentService.findById(id);
+		
+		if (!file.isEmpty()) {
+			String fileName = UUID.randomUUID().toString().concat("").concat(file.getOriginalFilename().replace(" ", ""));
+			Path photoRoute = Paths.get("upload").resolve(fileName).toAbsolutePath();
+			log.info(fileName.toString());
+			try {
+				Files.copy(file.getInputStream(), photoRoute);
+			} catch (IOException e) {
+				response.put(EnumConstantsApi.ST_MESSAGE_JSON.getValue(), "Error al subir la imagen del estudiante ");
+				response.put(EnumConstantsApi.ST_ERROR_JSON.getValue(), e.getMessage().concat(": ").concat(e.getCause().getMessage()));
+				return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+				
+			}
+			
+			if (!isEmptyCustom(student.getPhoto())) {
+				Path beforePhotoRoute = Paths.get("upload").resolve(student.getPhoto()).toAbsolutePath();
+				File beforePhoto = beforePhotoRoute.toFile();
+				if (beforePhoto.exists() && beforePhoto.canRead()) {
+					beforePhoto.delete();
+				}
+			}
+			
+			student.setPhoto(fileName);
+			this.studentService.save(student);
+			
+			response.put(EnumConstantsApi.ST_STUDENT_JSON.getValue(), student);
+			response.put(EnumConstantsApi.ST_MESSAGE_JSON.getValue(), "has subido correctamente la imagen "+ fileName );
+		}
+		
+		
+		
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+	
+	}
+	
+	@GetMapping("/student/upload/img/{photoNam:.+}")
+	public ResponseEntity<Resource> showPhoto(@PathVariable String photo){
+		Path photoName = Paths.get("upload").resolve(photo).toAbsolutePath();
+		log.info(photoName.toString());
+		Resource resource = null;
+		
+		try {
+			resource = new UrlResource(photoName.toUri());
+		}catch(MalformedURLException e) {
+			e.printStackTrace();
+		}
+		
+		if ( !resource.exists() && !resource.isReadable()) {
+			throw new RuntimeException("No se pudo cargar la imagen ".concat(photo));
+		}
+		
+		HttpHeaders headers = new HttpHeaders(); 
+		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+ resource.getFilename() + "\"");
+		
+		return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
+	}
+	
+	private static boolean isEmptyCustom(String string) { 
+		return (null == string || string.length() == 0) ? true : false; 
 	}
 	
 	
