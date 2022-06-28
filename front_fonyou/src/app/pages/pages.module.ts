@@ -10,6 +10,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
+import { PagesRoutingModule } from './pages-routing.module';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     NgxSpinnerModule,
     FontAwesomeModule,
     RouterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PagesRoutingModule
   ],
   exports:[
     CreateExamComponent,

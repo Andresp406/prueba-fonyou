@@ -6,11 +6,14 @@ import { ExamComponent } from './pages/exam/exam.component';
 import { CreateExamComponent } from './pages/create-exam/create-exam.component';
 
 const routes: Routes = [
-  {path:'', component: HomeComponent},
-  {path:'student', component: StudentComponent},
-  {path:'exam', component: ExamComponent},
-  {path:'create-exam', component: CreateExamComponent},
-  {path:'**', redirectTo:'/'}
+  {
+    path:'modulo',
+    loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule)
+  },
+  { 
+    path:'', 
+    component:HomeComponent
+  }
 ];
 
 @NgModule({
